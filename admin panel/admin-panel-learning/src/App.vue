@@ -1,11 +1,13 @@
 <script setup>
-
+import Layout from './components/Layout.vue';
 </script>
 
 <template>
-<div class="bg-green-200">Hello</div>
+  
+  <Layout>
+    Hello World
+  </Layout>
+
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
