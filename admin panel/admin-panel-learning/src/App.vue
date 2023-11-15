@@ -5,7 +5,7 @@ import Layout from './components/Layout.vue';
 <template>
   
   <Layout>
-    Hello World
+    <router-view :key="$route.fullPath" />
   </Layout>
 
 </template>
