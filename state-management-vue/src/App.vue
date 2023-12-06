@@ -1,44 +1,28 @@
 <script setup>
-import { ref, reactive, watch, watchEffect } from 'vue'
+import { ref, reactive, shallowRef } from 'vue'
+import ComponentA from './components/ComponentA.vue';
+import ComponentB from './components/ComponentB.vue';
 
-const post = reactive({
-  title: ''
-})
+const activeComponent = shallowRef(ComponentA)
 
-const postId = ref(1)
-
-/**
- * Using Async Awit
- */
-
-watch(postId, async (newValue, oldValue) => {
-  post.title = 'Loading.....'
-  const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${newValue}`)
-  const json = await response.json()
-  post.title = json.title
-}, { immediate: true })
+function switchComponentA() {
+  activeComponent.value = ComponentA
+}
 
 
-/**
- * Using Fetch API Promise
- */
-// watch(postId, (newValue, oldValue) => {
-//   post.title = 'Loading.....'
-//   fetch(`https://jsonplaceholder.typicode.com/posts/${newValue}`)
-//     .then((response) => response.json())
-//     .then((json) => {
-//       post.title = json.title
-//     })
-// }, { immediate: true })
-
-
+function switchComponentB() {
+  activeComponent.value = ComponentB
+}
 </script>
 
 <template>
-  <div class="container mx-auto space-y-2 bg-gray-100 p-5 rounded-lg w-1/3 mt-20">
-    <p>Post Title: {{ post.title }}</p>
-    <p>Post Id: {{ postId }} </p>
-    <input type="text" v-model="postId">
+  <div class="container w-1/3 mx-auto mt-10 bg-gray-100 p-5 rounded-sm">
+    <component :is='activeComponent'></component>
+  </div>
+
+  <div class="container w-1/3 mx-auto mt-1 p-5 rounded-sm space-x-2">
+    <button @click="switchComponentA" class="py-1.5 px-2 text-white bg-blue-500">Switch To Component A</button>
+    <button @click="switchComponentB" class="py-1.5 px-2 text-white bg-blue-500">Switch To Component b</button>
   </div>
 </template>
 
